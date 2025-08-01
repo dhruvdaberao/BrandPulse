@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LeapScholar Brand Monitor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>LeapScholar Brand Monitor</h1>
+    <p class="subtitle">See what People are saying about us! 😺</p>
+
+    <div class="charts">
+      <div class="chart-box">
+        <h2>Sentiments</h2>
+        <div class="chart-wrapper">
+          <canvas id="sentimentChart"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-box">
+        <h2>Key Topics</h2>
+        <div class="chart-wrapper">
+          <canvas id="topicChart"></canvas>
+        </div>
+      </div>
+
+   <div class="chart-box">
+  <h2>Mentions by Date</h2>
+  <p class="subheading">Trend of user mentions over time</p>
+  <div class="chart-wrapper">
+    <canvas id="dateChart"></canvas>
+  </div>
+</div>
+
+
+    <div class="mentions">
+      <h2>Recent Comments</h2>
+      <ul>
+        {% for mention in mentions %}
+        <li>
+          <span class="date">{{ mention.Date }}</span>
+          <span class="place">{{ mention.PlatformName }}</span>
+          <p>{{ mention.Comments }} (<strong>{{ mention.Sentiments }}</strong>)</p>
+          <p class="topics">Topics: {{ mention.Key_info }}</p>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const sentimentData = {{ sentiments | tojson | safe }} || { labels: [], values: [] };
+    const topicData = {{ topics | tojson | safe }} || { labels: [], values: [] };
+    const dateData = {{ dates | tojson | safe }} || { labels: [], values: [] };
+
+    const sentimentCtx = document.getElementById('sentimentChart').getContext('2d');
+    new Chart(sentimentCtx, {
+      type: 'pie',
+      data: {
+        labels: sentimentData.labels,
+        datasets: [{
+          data: sentimentData.values,
+          backgroundColor: ['#FF6B6B', '#4ECDC4', '#FFD93D'],
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { color: '#2c3e50' } },
+        }
+      }
+    });
+
+    const topicCtx = document.getElementById('topicChart').getContext('2d');
+    new Chart(topicCtx, {
+      type: 'bar',
+      data: {
+        labels: topicData.labels,
+        datasets: [{
+          label: 'Mentions',
+          data: topicData.values,
+          backgroundColor: '#F7B731',
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+        },
+        scales: {
+          y: { beginAtZero: true, ticks: { color: '#2c3e50' } },
+          x: { ticks: { color: '#2c3e50' } }
+        }
+      }
+    });
+
+    const dateCtx = document.getElementById('dateChart').getContext('2d');
+    new Chart(dateCtx, {
+      type: 'line',
+      data: {
+        labels: dateData.labels,
+        datasets: [{
+          label: 'Record Count',
+          data: dateData.values,
+          borderColor: '#6C5CE7',
+          backgroundColor: 'rgba(108, 92, 231, 0.2)',
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { color: '#2c3e50' } },
+        },
+        scales: {
+          y: { beginAtZero: true, ticks: { color: '#2c3e50' } },
+          x: { ticks: { color: '#2c3e50' } }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

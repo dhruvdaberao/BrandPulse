@@ -1,0 +1,5 @@
+cron:
+- description: "Update sentiment data hourly"
+  url: /update
+  schedule: every 1 hours
+  target: default
