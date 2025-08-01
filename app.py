@@ -25,7 +25,7 @@ app = Flask(__name__)
 
 # Set up Google Sheets
 SCOPE = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-CREDS = ServiceAccountCredentials.from_json_keyfile_dict()
+CREDS = ServiceAccountCredentials.from_json_keyfile_dict(credentials, SCOPE)
 SHEET = gspread.authorize(CREDS).open("LeapScholar_Brand_Monitor").sheet1
 
 @app.route("/")
