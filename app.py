@@ -11,7 +11,7 @@ credentials = {
     "type": get_key(".env", "TYPE"),
     "project_id": get_key(".env", "PROJECT_ID"),
     "private_key_id": get_key(".env", "PRIVATE_KEY_ID"),
-    "private_key": get_key(".env", "PRIVATE_KEY").replace("\\n", "\n"),  # Decode line breaks
+    "private_key": get_key(".env", "PRIVATE_KEY"),
     "client_email": get_key(".env", "CLIENT_EMAIL"),
     "client_id": get_key(".env", "CLIENT_ID"),
     "auth_uri": get_key(".env", "AUTH_URI"),
