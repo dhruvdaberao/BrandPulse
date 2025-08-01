@@ -3,12 +3,29 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from collections import Counter
 from datetime import datetime
+from dotenv import load_dotenv, get_key
+
+load_dotenv()
+
+credentials = {
+    "type": get_key(".env", "TYPE"),
+    "project_id": get_key(".env", "PROJECT_ID"),
+    "private_key_id": get_key(".env", "PRIVATE_KEY_ID"),
+    "private_key": get_key(".env", "PRIVATE_KEY").replace("\\n", "\n"),  # Decode line breaks
+    "client_email": get_key(".env", "CLIENT_EMAIL"),
+    "client_id": get_key(".env", "CLIENT_ID"),
+    "auth_uri": get_key(".env", "AUTH_URI"),
+    "token_uri": get_key(".env", "TOKEN_URI"),
+    "auth_provider_x509_cert_url": get_key(".env", "AUTH_PROVIDER_X509_CERT_URL"),
+    "client_x509_cert_url": get_key(".env", "CLIENT_X509_CERT_URL"),
+    "universe_domain": get_key(".env", "UNIVERSE_DOMAIN")
+}
 
 app = Flask(__name__)
 
 # Set up Google Sheets
 SCOPE = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-CREDS = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", SCOPE)
+CREDS = ServiceAccountCredentials.from_json_keyfile_dict()
 SHEET = gspread.authorize(CREDS).open("LeapScholar_Brand_Monitor").sheet1
 
 @app.route("/")
