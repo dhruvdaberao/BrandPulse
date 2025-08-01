@@ -4,21 +4,35 @@ from oauth2client.service_account import ServiceAccountCredentials
 from collections import Counter
 from datetime import datetime
 from dotenv import load_dotenv, get_key
-
+import os
 load_dotenv()
+
+# credentials = {
+#     "type": "service_account",
+#     "project_id": get_key(".env", "PROJECT_ID"),
+#     "private_key_id": get_key(".env", "PRIVATE_KEY_ID"),
+#     "private_key": get_key(".env", "PRIVATE_KEY"),
+#     "client_email": get_key(".env", "CLIENT_EMAIL"),
+#     "client_id": get_key(".env", "CLIENT_ID"),
+#     "auth_uri": get_key(".env", "AUTH_URI"),
+#     "token_uri": get_key(".env", "TOKEN_URI"),
+#     "auth_provider_x509_cert_url": get_key(".env", "AUTH_PROVIDER_X509_CERT_URL"),
+#     "client_x509_cert_url": get_key(".env", "CLIENT_X509_CERT_URL"),
+#     "universe_domain": get_key(".env", "UNIVERSE_DOMAIN")
+# }
 
 credentials = {
     "type": "service_account",
-    "project_id": get_key(".env", "PROJECT_ID"),
-    "private_key_id": get_key(".env", "PRIVATE_KEY_ID"),
-    "private_key": get_key(".env", "PRIVATE_KEY"),
-    "client_email": get_key(".env", "CLIENT_EMAIL"),
-    "client_id": get_key(".env", "CLIENT_ID"),
-    "auth_uri": get_key(".env", "AUTH_URI"),
-    "token_uri": get_key(".env", "TOKEN_URI"),
-    "auth_provider_x509_cert_url": get_key(".env", "AUTH_PROVIDER_X509_CERT_URL"),
-    "client_x509_cert_url": get_key(".env", "CLIENT_X509_CERT_URL"),
-    "universe_domain": get_key(".env", "UNIVERSE_DOMAIN")
+    "project_id": os.getenv(".env", "PROJECT_ID"),
+    "private_key_id": os.getenv(".env", "PRIVATE_KEY_ID"),
+    "private_key": os.getenv(".env", "PRIVATE_KEY"),
+    "client_email": os.getenv(".env", "CLIENT_EMAIL"),
+    "client_id": os.getenv(".env", "CLIENT_ID"),
+    "auth_uri": os.getenv(".env", "AUTH_URI"),
+    "token_uri": os.getenv(".env", "TOKEN_URI"),
+    "auth_provider_x509_cert_url": os.getenv(".env", "AUTH_PROVIDER_X509_CERT_URL"),
+    "client_x509_cert_url": os.getenv(".env", "CLIENT_X509_CERT_URL"),
+    "universe_domain": os.getenv(".env", "UNIVERSE_DOMAIN")
 }
 
 app = Flask(__name__)
