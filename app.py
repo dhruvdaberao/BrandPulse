@@ -8,7 +8,7 @@ from dotenv import load_dotenv, get_key
 load_dotenv()
 
 credentials = {
-    "type": get_key(".env", "TYPE"),
+    "type": "service_account",
     "project_id": get_key(".env", "PROJECT_ID"),
     "private_key_id": get_key(".env", "PRIVATE_KEY_ID"),
     "private_key": get_key(".env", "PRIVATE_KEY"),
